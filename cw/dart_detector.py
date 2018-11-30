@@ -233,7 +233,6 @@ def runHoughTransform(croppedTargets, ioImage, detectedTarget):
 
 
 imageDictionary = {
-    "imageName" : [],
     "image": [],
     "task1": [4, 5, 13, 14, 15],
     "grayImage": [],
@@ -242,9 +241,11 @@ imageDictionary = {
     "targetDetection": []
 }
 
+imageNames = {}
+
 for i in range(16):
     image = cv.imread("./images/dart"+str(i)+".jpg")
-    imageDictionary["imageName"].append(i)
+    imageNames["dart" + str(i) + ".jpg"] = i
     imageDictionary["image"].append(image)
     imageDictionary["grayImage"].append(cv.cvtColor(image, cv.COLOR_BGR2GRAY))
 
@@ -278,20 +279,23 @@ for i in range(len(detectedTarget.keys())):
         crop_img = imageDictionary["grayImage"][i][y:y+h, x:x+w]
         croppedTargets[str(i)].append(crop_img)
 
+ioImage_string = ""
 ioImage = 0
 
 while 1:
     try:
-        ioImage = int(input("Which image do you want do detect a dart board? Enter image number: "))
+        ioImage_string = str(input("Which image do you want do detect a dart board? "))
     except:
         print("try again")
         continue
 
-    if ioImage in imageDictionary["imageName"]:
+    if ioImage_string in imageNames:
         break
     else:
         print("Invalid image, try again")
         continue
+
+ioImage = imageNames[ioImage_string]
 
 chosen_images = copy.deepcopy(croppedTargets[str(ioImage)])
 
