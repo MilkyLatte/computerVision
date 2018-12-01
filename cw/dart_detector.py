@@ -113,7 +113,6 @@ def get_center_line(thresholded, image, max_ps, angles):
 def hough_circle(image, gradient, min_radius, max_radius):
 
     houghs = np.zeros((len(image),len(image[0]), max_radius - min_radius))
-    print(len(image),len(image[0]))
     for y in range(0, len(image)):
         for x in range(0, len(image[0])):
             if image[y][x] == 255:
@@ -187,9 +186,7 @@ def magnitude(img):
     src = cv.GaussianBlur( src, (3,3), 0, 0);
     sobelx = cv.Sobel(src,cv.CV_64F,1,0,ksize=3)  # x
     sobely = cv.Sobel(img,cv.CV_64F,0,1,ksize=3)  # y
-    for y in range(len(sobely)):
-        for x in range(len(sobelx)):
-            gradient[y][x] = ma.atan2(sobely[y][x], sobelx[y][x])
+    gradient = cv.phase(sobely, sobelx, False)
 
     return cv.addWeighted(cv.convertScaleAbs(sobelx), 0.5, cv.convertScaleAbs(sobely), 0.5, 0), gradient
 
