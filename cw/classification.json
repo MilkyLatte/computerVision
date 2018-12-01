@@ -8,11 +8,11 @@
     ],
     "2": [
         true,
-        true
+        false
     ],
     "3": [
-        true,
-        true,
+        false,
+        false,
         true,
         false,
         false
@@ -35,15 +35,15 @@
     ],
     "8": [
         false,
-        true,
+        false,
         true,
         false
     ],
     "9": [
-        true
+        false
     ],
     "10": [
-        true,
+        false,
         false,
         false,
         true,
@@ -74,8 +74,8 @@
         false,
         false,
         false,
-        false,
-        true
+        true,
+        false
     ],
     "15": [
         true
