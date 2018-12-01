@@ -113,31 +113,20 @@ def get_center_line(thresholded, image, max_ps, angles):
 def hough_circle(image, gradient, min_radius, max_radius):
 
     houghs = np.zeros((len(image),len(image[0]), max_radius - min_radius))
+    print(len(image),len(image[0]))
     for y in range(0, len(image)):
         for x in range(0, len(image[0])):
             if image[y][x] == 255:
                  for w in range(min_radius - 1, max_radius):
-                        x_weight = w * int(np.round(np.cos(gradient[y][x])))
-                        y_weight = w * int(np.round(np.sin(gradient[y][x])))
+                        x_weight = w * np.sin(gradient[y][x])
+                        y_weight = w * np.cos(gradient[y][x])
 
-
-                        x0 = x + x_weight
-                        x1 = x - x_weight
-                        y0 = y + y_weight
-                        y1 = y - y_weight
-
-
-                        if y0 >= 0 and x0 >= 0 and y0 < len(image) and x0 < len(image[0]):
-                            houghs[y0][x0][w - min_radius] += 1
-
-                        if y0 >= 0 and x1 >= 0 and y0 < len(image) and x1 < len(image[0]):
-                            houghs[y0][x1][w - min_radius] += 1
-
-                        if y1 >= 0 and x0 >= 0 and y1 < len(image) and x0 < len(image[0]):
-                            houghs[y1][x0][w - min_radius] += 1
+                        x1 = int(round(abs(x - x_weight)))
+                        y1 = int(round(abs(y - y_weight)))
 
                         if y1 >= 0 and x1 >= 0 and y1 < len(image) and x1 < len(image[0]):
                             houghs[y1][x1][w - min_radius] += 1
+
 
     return houghs
 
